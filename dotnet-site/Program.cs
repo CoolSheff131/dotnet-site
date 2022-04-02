@@ -16,6 +16,8 @@
 //app.MapRazorPages();
 //app.Run();
 
+using Microsoft.AspNetCore;
+
 namespace dotnet_site 
 { 
 	public class Program
@@ -27,6 +29,7 @@ namespace dotnet_site
 
 		public static IWebHost BuildWebHost(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)
-			.UseStartup<Start>
+			.UseStartup<Startup>()
+			.Build();
 	}
 }
