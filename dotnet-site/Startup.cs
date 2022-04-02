@@ -19,28 +19,30 @@ namespace dotnet_site
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
+			services.AddControllersWithViews()
+				.SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0)
+				.AddSessionStateTempDataProvider();
 		}
 
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDirectoryBrowser();
 				app.UseDeveloperExceptionPage();
 			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-			}
-
+			// подключаем поддержку статичных файлов в приложении (css, js и т.д.)
 			app.UseStaticFiles();
 
-			app.UseMvc(routes =>
+			// подключаем систему маршрутизации
+			app.UseRouting();
+
+			
+
+			app.UseEndpoints(endpoints =>
 			{
-				routes.MapRoute(
-					name: "default",
-					template: "{controller=Home}/{action=Index}/{id?}");
+				endpoints.MapControllerRoute(
+					"default",
+					"{controller=Home}/{action=Index}/{id?}");
 			});
 
 		}

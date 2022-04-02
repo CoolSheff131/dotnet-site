@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using dotnet_site.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace dotnet_site.Controllers
 {
@@ -6,7 +7,8 @@ namespace dotnet_site.Controllers
 	{
 		public IActionResult Index()
 		{
-			return View();
+			HelloModel _model = new HelloModel() { HelloMessage = "Hey Alexander!"};
+			return View(_model);
 		}
 
 		public IActionResult About()
