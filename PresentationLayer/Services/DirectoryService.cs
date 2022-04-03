@@ -72,5 +72,9 @@ namespace PresentationLayer.Services
 			_dataManager.Directories.SaveDirectory(_directoryModelDbModel);
 			return DirectoryDBToViewModelById(_directoryModelDbModel.Id);
 		}
+		public DirectoryEditModel CreateNewDirectoryEditModel()
+		{
+			return new DirectoryEditModel() { };
+		}
 	}
 }
