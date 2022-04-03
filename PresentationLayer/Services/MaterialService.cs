@@ -17,11 +17,11 @@ namespace PresentationLayer.Services
 			{
 				Material = dataManager.Materials.GetMaterialById(materialId),
 			};
-			var _dir = dataManager.Directories.GetDirectoryById(_model.Material.DirectoryId);
+			var _dir = dataManager.Directories.GetDirectoryById(_model.Material.DirectoryId,true);
 
-			if(_dir.Materials.IndexOf(_model.Material) == _dir.Materials.Count)
+			if (_dir.Materials.IndexOf(_dir.Materials.FirstOrDefault(x => x.Id == _model.Material.Id)) != _dir.Materials.Count() - 1)
 			{
-				_model.NextMaterial = _dir.Materials.ElementAt(_dir.Materials.IndexOf(_model.Material) + 1);
+				_model.NextMaterial = _dir.Materials.ElementAt(_dir.Materials.IndexOf(_dir.Materials.FirstOrDefault(x => x.Id == _model.Material.Id)) + 1);
 			}
 
 			return _model;
