@@ -1,4 +1,5 @@
 ﻿using BusinessLayer;
+using DataLayer.Entities;
 using PresentationLayer.Models;
 
 namespace PresentationLayer.Services
@@ -24,6 +25,37 @@ namespace PresentationLayer.Services
 			}
 
 			return _model;
+		}
+
+		public MaterialEditModel GetMaterialEditModel(int materialId)
+		{
+			var _dbModel = dataManager.Materials.GetMaterialById(materialId);
+			var _editModel = new MaterialEditModel()
+			{
+				Id = _dbModel.Id,
+				DirectoryId = _dbModel.DirectoryId,
+				Title = _dbModel.Title,
+				Html = _dbModel.Html,
+			};
+			return _editModel;
+		}
+
+		public MaterialViewModel SaveMaterialEditModelToDb(MaterialEditModel editModel)
+		{
+			Material material;
+			if(editModel.Id != 0)
+			{
+				material = dataManager.Materials.GetMaterialById(editModel.Id);
+			}
+			else
+			{
+				material = new Material();
+			}
+			material.Title = editModel.Title;
+			material.Html = editModel.Html;
+			material.DirectoryId = editModel.DirectoryId;
+			dataManager.Materials.SaveMaterial(material);
+			return MaterialDBModelToView(material.Id);
 		}
 	}
 }
