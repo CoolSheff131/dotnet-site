@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using DataLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,13 +14,16 @@ namespace dotnet_site
 	{
 		public Startup(IConfiguration configuration)
 		{
-			configuration = configuration;
+			Configuration = configuration;
 		}
 
 		public IConfiguration Configuration { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			var connection = Configuration.GetConnectionString("DefaultConnection");
+
+			services.AddDbContext<EFDBContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("DataLayer")));
 			services.AddControllersWithViews()
 				.SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0)
 				.AddSessionStateTempDataProvider();
@@ -35,8 +40,6 @@ namespace dotnet_site
 
 			// подключаем систему маршрутизации
 			app.UseRouting();
-
-			
 
 			app.UseEndpoints(endpoints =>
 			{

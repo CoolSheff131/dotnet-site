@@ -17,7 +17,7 @@ namespace DataLayer
 		public EFDBContext CreateDbContext(string[] args)
 		{
 			var optionsBuilder = new DbContextOptionsBuilder<EFDBContext>();
-			optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB; Database=site; Persist Security Info=false; User ID='sa'; Password='sa'; MultipleActiveResultSets=True; Trusted_Connection=False;");
+			optionsBuilder.UseSqlServer("Data Source=(LocalDB)\\MSSQLLocalDB; Database=site; Persist Security Info=false; User ID='sa'; Password='sa'; MultipleActiveResultSets=True; Trusted_Connection=False;",b => b.MigrationsAssembly("DataLayer"));
 			return new EFDBContext(optionsBuilder.Options);
 		}
 	}

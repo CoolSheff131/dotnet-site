@@ -16,6 +16,7 @@
 //app.MapRazorPages();
 //app.Run();
 
+using DataLayer;
 using Microsoft.AspNetCore;
 
 namespace dotnet_site 
@@ -24,12 +25,25 @@ namespace dotnet_site
 	{
 		public static void Main(string[] args)
 		{
-			BuildWebHost(args).Run();
+			//BuildWebHost(args).Run();
+			var host = CreateHostBuilder(args).Build();
+
+			using(var scope = host.Services.CreateScope())
+			{
+				var services = scope.ServiceProvider;
+
+				var context = services.GetRequiredService<EFDBContext>();
+				SampleData.InitData(context);
+			}
+
+			host.Run();
 		}
 
-		public static IWebHost BuildWebHost(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
-			.UseStartup<Startup>()
-			.Build();
+		public static IHostBuilder CreateHostBuilder(string[] args) =>
+			Host.CreateDefaultBuilder(args)
+			.ConfigureWebHostDefaults(webBuilder =>
+			{
+				webBuilder.UseStartup<Startup>();
+			});
 	}
 }
