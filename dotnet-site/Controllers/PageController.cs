@@ -27,6 +27,8 @@ namespace dotnet_site.Controllers
 			ViewBag.PageId = pageType;
 			return View(_viewModel);
 		}
+
+		[HttpGet]
 		public IActionResult PageEditor(int pageId, PageType pageType, int directoryId = 0)
 		{
 			PageEditModel _editModel;
