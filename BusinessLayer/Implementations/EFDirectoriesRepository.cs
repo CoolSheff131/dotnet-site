@@ -1,15 +1,10 @@
 ﻿using BusinessLayer.Interfaces;
 using DataLayer;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Implementations
 {
-	internal class EFDirectoriesRepository : IDirectoriesRepository
+	public class EFDirectoriesRepository : IDirectoriesRepository
 	{
 		private EFDBContext context;
 		public EFDirectoriesRepository(EFDBContext context)

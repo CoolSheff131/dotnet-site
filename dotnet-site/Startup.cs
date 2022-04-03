@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessLayer.Interfaces;
+using BusinessLayer.Implementations;
+using BusinessLayer;
 using DataLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,6 +27,11 @@ namespace dotnet_site
 			var connection = Configuration.GetConnectionString("DefaultConnection");
 
 			services.AddDbContext<EFDBContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("DataLayer")));
+
+			services.AddTransient<IDirectoriesRepository, EFDirectoriesRepository>();
+			services.AddTransient<IMaterialsRepository, EFMaterialsRepository>();
+
+			services.AddScoped<DataManager>();	
 			services.AddControllersWithViews()
 				.SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0)
 				.AddSessionStateTempDataProvider();
